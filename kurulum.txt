@@ -1,0 +1,227 @@
+SALI BACKEND PROJESİ KURULUM ADIMLARI
+====================================
+
+1. GEREKSİNİMLER
+----------------
+- PHP 8.1 veya üzeri
+- Composer
+- Node.js 16 veya üzeri
+- MySQL veya MariaDB
+- XAMPP (önerilen)
+- Git (opsiyonel)
+
+2. XAMPP KURULUMU
+-----------------
+1. https://www.apachefriends.org/download.html adresinden XAMPP'ı indirin
+2. İndirilen kurulum dosyasını çalıştırın
+3. Kurulum sırasında en azından Apache ve MySQL'i seçin
+4. Kurulumu tamamlayın
+5. XAMPP Control Panel'den Apache ve MySQL servislerini başlatın
+
+3. PROJE KURULUMU
+----------------
+1. XAMPP'ı başlatın ve Apache ile MySQL servislerini çalıştırın
+2. Projeyi C:\xampp\htdocs klasörüne kopyalayın
+3. Komut istemini (CMD) yönetici olarak açın
+4. Proje klasörüne gidin:
+   cd C:\xampp\htdocs\sali-back-edited
+
+4. COMPOSER KURULUMU VE BAĞIMLILIKLARININ KURULUMU
+------------------------------------------------
+1. Composer'ı https://getcomposer.org/download/ adresinden indirin
+2. Composer-Setup.exe dosyasını çalıştırın ve kurulumu tamamlayın
+3. Kurulumun başarılı olduğunu kontrol etmek için:
+   composer --version
+4. Proje klasöründe aşağıdaki komutu çalıştırın:
+   composer install
+   (Bu işlem birkaç dakika sürebilir)
+
+5. NODE.JS KURULUMU VE BAĞIMLILIKLARININ KURULUMU
+-----------------------------------------------
+1. Node.js'i https://nodejs.org/ adresinden indirin (LTS versiyonu önerilir)
+2. Node.js kurulum dosyasını çalıştırın
+3. Kurulumun başarılı olduğunu kontrol etmek için:
+   node --version
+   npm --version
+4. Proje klasöründe aşağıdaki komutu çalıştırın:
+   npm install
+   (Bu işlem birkaç dakika sürebilir)
+
+6. VERİTABANI AYARLARI
+---------------------
+1. phpMyAdmin'e gidin (http://localhost/phpmyadmin)
+2. Sol menüden "New" veya "Yeni" seçeneğine tıklayın
+3. Veritabanı adını "sali_db" olarak girin ve "Create" veya "Oluştur"a tıklayın
+4. .env dosyasını oluşturun:
+   a. Proje ana dizininde yeni bir .env dosyası oluşturun
+   b. Aşağıdaki içeriği .env dosyasına kopyalayın:
+
+   APP_NAME=SaliBack
+   APP_ENV=local
+   APP_KEY=
+   APP_DEBUG=true
+   APP_URL=http://localhost
+   APP_LOCALE=tr
+   APP_FALLBACK_LOCALE=tr
+
+   LOG_CHANNEL=stack
+   LOG_DEPRECATIONS_CHANNEL=null
+   LOG_LEVEL=debug
+
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=sali_db
+   DB_USERNAME=root
+   DB_PASSWORD=
+
+   BROADCAST_DRIVER=log
+   CACHE_DRIVER=file
+   FILESYSTEM_DISK=local
+   QUEUE_CONNECTION=sync
+   SESSION_DRIVER=file
+   SESSION_LIFETIME=120
+
+   MEMCACHED_HOST=127.0.0.1
+
+   REDIS_HOST=127.0.0.1
+   REDIS_PASSWORD=null
+   REDIS_PORT=6379
+
+   MAIL_MAILER=smtp
+   MAIL_HOST=mailpit
+   MAIL_PORT=1025
+   MAIL_USERNAME=null
+   MAIL_PASSWORD=null
+   MAIL_ENCRYPTION=null
+   MAIL_FROM_ADDRESS="hello@example.com"
+   MAIL_FROM_NAME="${APP_NAME}"
+
+   SANCTUM_STATEFUL_DOMAINS=localhost:8000
+   SESSION_DOMAIN=localhost
+
+   VITE_APP_NAME="${APP_NAME}"
+   VITE_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+   VITE_PUSHER_HOST="${PUSHER_HOST}"
+   VITE_PUSHER_PORT="${PUSHER_PORT}"
+   VITE_PUSHER_SCHEME="${PUSHER_SCHEME}"
+   VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+   # Özel Ayarlar
+   CORS_ALLOWED_ORIGINS=http://localhost:8000,http://localhost:3000
+   CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
+   CORS_ALLOWED_HEADERS=Content-Type,Authorization,X-Requested-With
+   CORS_ALLOW_CREDENTIALS=true
+
+   # Dosya Yükleme Ayarları
+   UPLOAD_MAX_FILESIZE=10
+   UPLOAD_ALLOWED_TYPES=jpg,jpeg,png,gif,pdf,doc,docx
+   UPLOAD_PATH=uploads
+
+7. UYGULAMA AYARLARI
+-------------------
+1. Uygulama anahtarını oluşturun:
+   php artisan key:generate
+
+2. Veritabanı tablolarını oluşturun:
+   php artisan migrate
+
+3. Storage klasörü için sembolik bağlantı oluşturun:
+   php artisan storage:link
+
+4. Gerekli izinleri ayarlayın:
+   - storage klasörüne yazma izni verin
+   - bootstrap/cache klasörüne yazma izni verin
+
+8. UYGULAMAYI ÇALIŞTIRMA
+-----------------------
+1. İki terminal penceresi açın
+
+2. İlk terminal penceresinde:
+   - Proje klasörüne gidin
+   - Geliştirme sunucusunu başlatın:
+     php artisan serve
+
+3. İkinci terminal penceresinde:
+   - Proje klasörüne gidin
+   - Frontend varlıklarını derleyin:
+     npm run dev
+
+4. Tarayıcınızda http://localhost:8000 adresine gidin
+
+9. OLASI HATALAR VE ÇÖZÜMLERİ
+----------------------------
+1. "Composer not found" hatası:
+   - Composer'ın doğru kurulduğundan emin olun
+   - Sistem PATH değişkenlerini kontrol edin
+   - Komut istemini yeniden başlatın
+
+2. "Node not found" hatası:
+   - Node.js'in doğru kurulduğundan emin olun
+   - Sistem PATH değişkenlerini kontrol edin
+   - Komut istemini yeniden başlatın
+
+3. Veritabanı bağlantı hatası:
+   - MySQL servisinin çalıştığından emin olun
+   - .env dosyasındaki veritabanı bilgilerini kontrol edin
+   - phpMyAdmin'den veritabanının oluşturulduğunu doğrulayın
+
+4. Storage hatası:
+   - storage klasörü izinlerini kontrol edin
+   - storage:link komutunu tekrar çalıştırın
+   - Windows'ta yönetici olarak çalıştırın
+
+5. Port çakışması hatası:
+   - 8000 portunu kullanan başka bir uygulama varsa kapatın
+   - veya farklı bir port kullanın:
+     php artisan serve --port=8001
+
+6. MySQL Bağlantı Hatası (SQLSTATE[HY000] [2002]):
+   a. XAMPP Control Panel'den MySQL servisinin çalıştığından emin olun
+   b. MySQL servisini yeniden başlatın:
+      - XAMPP Control Panel'den MySQL'i durdurun
+      - 10 saniye bekleyin
+      - MySQL'i tekrar başlatın
+   c. .env dosyasındaki veritabanı ayarlarını kontrol edin:
+      DB_CONNECTION=mysql
+      DB_HOST=127.0.0.1
+      DB_PORT=3306
+      DB_DATABASE=sali_db
+      DB_USERNAME=root
+      DB_PASSWORD=
+   d. MySQL servisinin port ayarlarını kontrol edin:
+      - XAMPP Control Panel'de MySQL'in yanındaki "Config" butonuna tıklayın
+      - my.ini dosyasını açın
+      - port=3306 olduğundan emin olun
+   e. Windows Güvenlik Duvarı ayarlarını kontrol edin:
+      - Windows Güvenlik Duvarı'nı açın
+      - "Gelişmiş ayarlar"a tıklayın
+      - "Gelen Kurallar"a sağ tıklayın
+      - "Yeni Kural" seçin
+      - "Port" seçin
+      - TCP ve 3306 portunu belirtin
+      - "İzin ver" seçin
+      - Tüm profilleri seçin
+      - Bir isim verin (örn: "MySQL")
+   f. Antivirüs programınızı geçici olarak devre dışı bırakın
+   g. Bilgisayarı yeniden başlatın
+
+10. GÜVENLİK NOTLARI
+-------------------
+1. .env dosyasını asla paylaşmayın
+2. Veritabanı şifrelerini güvenli tutun
+3. Production ortamında debug modunu kapatın
+4. Düzenli olarak güvenlik güncellemelerini yapın
+5. Hassas bilgileri .env dosyasında saklayın
+
+11. YARDIM VE DESTEK
+-------------------
+Herhangi bir sorunla karşılaşırsanız:
+1. Hata mesajını tam olarak not alın
+2. Hangi adımda sorun yaşadığınızı belirtin
+3. Gerekli log dosyalarını kontrol edin:
+   - storage/logs/laravel.log
+   - storage/logs/error.log
+
+Not: Bu kurulum adımları Windows işletim sistemi için hazırlanmıştır. 
+     Farklı bir işletim sistemi kullanıyorsanız, bazı komutlar ve yollar değişiklik gösterebilir. 
